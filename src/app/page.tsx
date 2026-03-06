@@ -42,29 +42,7 @@ export default function HomePage() {
         </div>
       </div>
 
-      <div className="space-y-6">
-        <h2 className="text-base font-semibold">커리큘럼</h2>
-        {CURRICULUM.map((section, idx) => (
-          <div key={idx}>
-            <h3 className="mb-2 text-base font-semibold text-[var(--foreground)]">
-              {section.section}
-            </h3>
-            <div className="space-y-1">
-              {section.pages.map((page) => (
-                <Link
-                  key={page.slug}
-                  href={`/${page.slug}`}
-                  className="block rounded-md px-3 py-2 text-sm text-[var(--muted-foreground)] transition-colors hover:bg-[var(--muted)] hover:text-[var(--foreground)]"
-                >
-                  {page.title}
-                </Link>
-              ))}
-            </div>
-          </div>
-        ))}
-      </div>
-
-      <div className="mt-12">
+      <div className="mt-10">
         <CourseBanner />
       </div>
     </div>
