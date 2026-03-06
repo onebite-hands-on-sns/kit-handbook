@@ -10,6 +10,9 @@ import { getPageContentBySlug } from "@/lib/notion";
 import MarkdownRenderer from "@/components/MarkdownRenderer";
 import CourseBanner from "@/components/CourseBanner";
 import CompleteToggle from "@/components/CompleteToggle";
+import TableOfContents from "@/components/TableOfContents";
+import KeyboardNav from "@/components/KeyboardNav";
+import ScrollToTop from "@/components/ScrollToTop";
 
 export const revalidate = 3600;
 
@@ -42,8 +45,20 @@ export default async function HandbookPage({
   const { prev, next } = getAdjacentPages(slug);
   const section = getSectionBySlug(slug);
 
+  // Reading time estimate (~200 words/min for Korean)
+  const charCount = data.content.replace(/[#*`\[\]()>\-\n]/g, "").length;
+  const readingTime = Math.max(1, Math.round(charCount / 500));
+
   return (
-    <div>
+    <div className="relative">
+      {/* TOC - right side, xl screens only */}
+      <aside className="fixed right-8 top-[calc(var(--header-height)+2rem)] hidden w-52 xl:block">
+        <TableOfContents />
+      </aside>
+
+      <KeyboardNav />
+      <ScrollToTop />
+
       <div className="mb-8 border-b border-[var(--border)] pb-6">
         {section && (
           <p className="mb-2 text-xs font-semibold tracking-wide text-[var(--primary)] uppercase">
@@ -53,6 +68,9 @@ export default async function HandbookPage({
         <h1 className="text-2xl font-extrabold tracking-tight sm:text-3xl">
           {data.title}
         </h1>
+        <p className="mt-3 text-sm text-[var(--muted-foreground)]">
+          약 {readingTime}분
+        </p>
       </div>
       <MarkdownRenderer content={data.content} />
 

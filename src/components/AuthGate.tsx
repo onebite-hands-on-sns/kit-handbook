@@ -3,7 +3,6 @@
 import { useState, useEffect } from "react";
 
 const STORAGE_KEY = "handbook-auth";
-const PASSWORD = "onebite-kit";
 
 export default function AuthGate({ children }: { children: React.ReactNode }) {
   const [authed, setAuthed] = useState(false);
@@ -19,12 +18,23 @@ export default function AuthGate({ children }: { children: React.ReactNode }) {
     setMounted(true);
   }, []);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (input === PASSWORD) {
-      localStorage.setItem(STORAGE_KEY, "true");
-      setAuthed(true);
-    } else {
+    try {
+      const res = await fetch("/api/auth", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ password: input }),
+      });
+      const data = await res.json();
+      if (data.ok) {
+        localStorage.setItem(STORAGE_KEY, "true");
+        setAuthed(true);
+      } else {
+        setError(true);
+        setTimeout(() => setError(false), 1500);
+      }
+    } catch {
       setError(true);
       setTimeout(() => setError(false), 1500);
     }
