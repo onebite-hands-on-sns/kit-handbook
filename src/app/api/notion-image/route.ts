@@ -29,9 +29,19 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: "Image not found" }, { status: 404 });
     }
 
-    return NextResponse.redirect(imageUrl, {
+    // Stream image through to avoid Notion URL expiry (1hr)
+    // CDN/browser caches the proxied response for 30min, then revalidates
+    const imgRes = await fetch(imageUrl);
+    if (!imgRes.ok) {
+      return NextResponse.json({ error: "Image fetch failed" }, { status: 502 });
+    }
+
+    const contentType = imgRes.headers.get("content-type") || "image/png";
+
+    return new NextResponse(imgRes.body, {
       headers: {
-        "Cache-Control": "public, max-age=1800, s-maxage=1800",
+        "Content-Type": contentType,
+        "Cache-Control": "public, s-maxage=1800, stale-while-revalidate=3600",
       },
     });
   } catch {

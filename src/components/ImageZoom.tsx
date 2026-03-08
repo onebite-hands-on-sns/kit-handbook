@@ -13,7 +13,7 @@ export default function ImageZoom(
         {...props}
         onClick={() => setOpen(true)}
         className="cursor-zoom-in"
-        style={{ borderRadius: 8, border: "1px solid var(--border)" }}
+        style={{ borderRadius: 8 }}
       />
       {open && (
         <div

@@ -12,13 +12,13 @@ export const metadata: Metadata = {
   openGraph: {
     title: "한입 리액트 실전 라이브러리 Kit - Handbook",
     description: "한입 React.js 실전 라이브러리 키트 강의의 핸드북입니다.",
-    images: ["/og-thumbnail.png"],
+    images: [{ url: "/og-thumbnail.png", width: 1200, height: 630 }],
   },
   twitter: {
     card: "summary_large_image",
     title: "한입 리액트 실전 라이브러리 Kit - Handbook",
     description: "한입 React.js 실전 라이브러리 키트 강의의 핸드북입니다.",
-    images: ["/og-thumbnail.png"],
+    images: [{ url: "/og-thumbnail.png", width: 1200, height: 630 }],
   },
   robots: {
     index: false,
