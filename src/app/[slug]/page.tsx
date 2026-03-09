@@ -14,7 +14,7 @@ import TableOfContents from "@/components/TableOfContents";
 import KeyboardNav from "@/components/KeyboardNav";
 import ScrollToTop from "@/components/ScrollToTop";
 
-export const revalidate = 3600;
+export const revalidate = false;
 
 export async function generateStaticParams() {
   return getAllSlugs().map((slug) => ({ slug }));
