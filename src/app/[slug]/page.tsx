@@ -15,6 +15,7 @@ import KeyboardNav from "@/components/KeyboardNav";
 import ScrollToTop from "@/components/ScrollToTop";
 
 export const revalidate = false;
+export const maxDuration = 30;
 
 export async function generateStaticParams() {
   return getAllSlugs().map((slug) => ({ slug }));
